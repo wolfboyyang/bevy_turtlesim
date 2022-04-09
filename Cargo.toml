@@ -1,0 +1,23 @@
+[package]
+name = "bevy_turtlesim"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+turtle_core = { path = "turtle_core" }
+turtlesim_plugin = { path = "turtlesim_plugin" }
+
+# Engine
+[dependencies.bevy]
+version = "0.6"
+default-features = false
+features = ["render", "bevy_winit", "png", "dynamic"]
+
+[workspace]
+members = [
+    "turtle_core",
+    "turtlesim_plugin",
+]
+resolver = "2"

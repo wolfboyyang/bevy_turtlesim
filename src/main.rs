@@ -1,7 +1,9 @@
+use bevy::log::LogPlugin;
 use bevy::math::const_vec2;
 use bevy::prelude::*;
 use turtle_core::events::MoveEvent;
 use turtlesim_plugin::TurtlesimPlugin;
+use zenoh_plugin::ZenohPlugin;
 
 const BOUNDS: Vec2 = const_vec2!([1200.0, 640.0]);
 
@@ -18,6 +20,8 @@ fn main() {
         })
         .add_startup_system(setup_camera)
         .add_plugin(TurtlesimPlugin)
+        .add_plugin(ZenohPlugin)
+        .add_plugin(LogPlugin)
         .add_system(input_system)
         //.add_startup_system(setup_asset)
         //.add_system(turtle_movement_system)
@@ -52,6 +56,6 @@ fn input_system(
         movement += 1;
     }
     if rotation != 0 || movement != 0 {
-        move_event_writer.send(MoveEvent { rotation, movement });
+        move_event_writer.send(MoveEvent { rotation, movement, teleop: false });
     }
 }

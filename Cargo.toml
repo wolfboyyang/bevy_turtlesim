@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 turtle_core = { path = "turtle_core" }
 turtlesim_plugin = { path = "turtlesim_plugin" }
+zenoh_plugin = { path = "zenoh_plugin" }
 
 # Engine
 [dependencies.bevy]
@@ -19,5 +20,6 @@ features = ["render", "bevy_winit", "png", "dynamic"]
 members = [
     "turtle_core",
     "turtlesim_plugin",
+    "zenoh_plugin",
 ]
 resolver = "2"

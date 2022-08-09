@@ -1,6 +1,7 @@
-use bevy::app::App;
-use bevy::prelude::*;
-use bevy::tasks::IoTaskPool;
+use bevy::{
+    prelude::*,
+    tasks::AsyncComputeTaskPool,
+};
 use cdr::{CdrLe, Infinite};
 use serde_derive::{Deserialize, Serialize};
 use std::fmt;
@@ -87,13 +88,14 @@ impl Plugin for ZenohPlugin {
     }
 }
 
-fn start_zenoh_session(mut commands: Commands, task_pool: Res<IoTaskPool>) {
+fn start_zenoh_session(mut commands: Commands) {
     let (sender, receiver) = mpsc::unbounded_channel::<MoveEvent>();
     let (twist_sender, twist_receiver) = mpsc::unbounded_channel::<Twist>();
 
+    let thread_pool = AsyncComputeTaskPool::get();
     // The message loop needs to be awaited, or nothing will happen.
     // We do this here using bevy's task system.
-    task_pool.spawn(zehno_message_loop(receiver, twist_sender)).detach();
+    thread_pool.spawn(zenoh_message_loop(receiver, twist_sender)).detach();
     info!("insert_resource sender close?{}", sender.is_closed());
     commands.insert_resource(sender);
     commands.insert_resource(twist_receiver);
@@ -127,9 +129,8 @@ fn handle_teleop_event(mut move_event_writer: EventWriter<MoveEvent>,
     }
 }
 
-async fn zehno_message_loop(
+async fn zenoh_message_loop(
     mut move_event_receiver: UnboundedReceiver<MoveEvent>,
-    //twist_sender: UnboundedSender<Twist>,
     twist_sender: UnboundedSender<Twist>
 ) {
     let mut config = Config::default();

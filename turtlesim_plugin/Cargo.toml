@@ -7,9 +7,9 @@ edition = "2021"
 
 [dependencies]
 turtle_core = { path = "../turtle_core" }
-bevy_prototype_debug_lines = "0.6.1"
+bevy_prototype_debug_lines = "0.8.0"
 # Engine
 [dependencies.bevy]
-version = "0.6"
+version = "0.8"
 default-features = false
 features = ["render"]

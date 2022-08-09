@@ -15,6 +15,6 @@ serde_derive = "1"
 cdr = "0.2.4"
 # Engine
 [dependencies.bevy]
-version = "0.6"
+version = "0.8"
 default-features = false
 features = ["render"]

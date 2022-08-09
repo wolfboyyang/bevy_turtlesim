@@ -12,7 +12,7 @@ zenoh_plugin = { path = "zenoh_plugin" }
 
 # Engine
 [dependencies.bevy]
-version = "0.6"
+version = "0.8"
 default-features = false
 features = ["render", "bevy_winit", "png", "dynamic"]
 

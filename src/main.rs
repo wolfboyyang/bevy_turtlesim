@@ -1,11 +1,10 @@
 use bevy::log::LogPlugin;
-use bevy::math::const_vec2;
 use bevy::prelude::*;
 use turtle_core::events::MoveEvent;
 use turtlesim_plugin::TurtlesimPlugin;
 use zenoh_plugin::ZenohPlugin;
 
-const BOUNDS: Vec2 = const_vec2!([1200.0, 640.0]);
+const BOUNDS: Vec2 = Vec2::from_array([1200.0, 640.0]);
 
 fn main() {
     App::new()
@@ -25,15 +24,17 @@ fn main() {
         .add_system(input_system)
         //.add_startup_system(setup_asset)
         //.add_system(turtle_movement_system)
-        .add_system(bevy::input::system::exit_on_esc_system)
+        .add_system(bevy::window::close_on_esc)
         .run();
 }
 
 fn setup_camera(mut commands: Commands) {
     // 2D orthographic camera
-    commands.spawn_bundle(OrthographicCameraBundle::new_2d());
+    //commands.spawn_bundle(OrthographicCameraBundle::new_2d());
     // UI Camera
-    commands.spawn_bundle(UiCameraBundle::default());
+    //commands.spawn_bundle(UiCameraBundle::default());
+
+    commands.spawn_bundle(Camera2dBundle::default());
 }
 
 /// applying rotation and movement based on keyboard input.

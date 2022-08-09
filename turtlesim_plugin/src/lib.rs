@@ -1,5 +1,5 @@
 use bevy::app::App;
-use bevy::core::FixedTimestep;
+use bevy::time::FixedTimestep;
 use bevy::prelude::*;
 use bevy_prototype_debug_lines::*;
 use turtle_core::events::MoveEvent;
